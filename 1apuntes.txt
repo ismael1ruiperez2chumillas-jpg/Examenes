@@ -1,0 +1,454 @@
+--- EXAMEN JUNIO 2022 ---
+
+RESISTENCIA DE MATERIALES 2 GIE
+
+--- PROBLEMA 2 ---
+
+Representar los diagramas de esfuerzos.
+
+Tenemos una viga con dos apoyos A y B.
+
+Cargas:
+
+P2 = 20 kN en el extremo izquierdo
+P  = 30 kN entre A y B
+P3 = 20 kN en el extremo derecho
+
+Distancias:
+
+Extremo izq - A = 2 m
+A - B = 6 m
+B - extremo der = 2 m
+
+Se toma el eje x desde el extremo izquierdo.
+
+Por tanto:
+
+x = 0 m       carga P2 = 20 kN
+x = 2 m       apoyo A
+x = 5 m       carga P = 30 kN
+x = 8 m       apoyo B
+x = 10 m      carga P3 = 20 kN
+
+------------------------------------------------------------
+
+--- 1) REACCIONES EN LOS APOYOS ---
+
+Incognitas:
+
+RA = reaccion vertical en A
+RB = reaccion vertical en B
+
+Equilibrio vertical:
+
+sum Fy = 0
+
+RA + RB - 20 - 30 - 20 = 0
+
+RA + RB = 70 kN
+
+------------------------------------------------------------
+
+Tomamos momentos respecto de A.
+
+Criterio:
+
+Momento antihorario positivo.
+
+Distancias respecto de A:
+
+P2 esta 2 m a la izquierda de A
+P esta 3 m a la derecha de A
+RB esta 6 m a la derecha de A
+P3 esta 8 m a la derecha de A
+
+sum M_A = 0
+
++20*2 + RB*6 - 30*3 - 20*8 = 0
+
+40 + 6*RB - 90 - 160 = 0
+
+6*RB - 210 = 0
+
+6*RB = 210
+
+RB = 210/6
+
+RB = 35 kN
+
+------------------------------------------------------------
+
+Ahora calculamos RA:
+
+RA + RB = 70
+
+RA + 35 = 70
+
+RA = 35 kN
+
+------------------------------------------------------------
+
+--- RESULTADO REACCIONES ---
+
+RA = 35 kN
+
+RB = 35 kN
+
+------------------------------------------------------------
+
+--- 2) DIAGRAMA DE ESFUERZO CORTANTE V ---
+
+Empezamos desde el extremo izquierdo.
+
+En x = 0 hay una carga hacia abajo de 20 kN.
+
+V = -20 kN
+
+Tramo 0 < x < 2:
+
+V = -20 kN
+
+------------------------------------------------------------
+
+En x = 2 esta el apoyo A.
+
+La reaccion RA sube 35 kN.
+
+V = -20 + 35
+
+V = +15 kN
+
+Tramo 2 < x < 5:
+
+V = +15 kN
+
+------------------------------------------------------------
+
+En x = 5 esta la carga P = 30 kN.
+
+La carga baja 30 kN.
+
+V = +15 - 30
+
+V = -15 kN
+
+Tramo 5 < x < 8:
+
+V = -15 kN
+
+------------------------------------------------------------
+
+En x = 8 esta el apoyo B.
+
+La reaccion RB sube 35 kN.
+
+V = -15 + 35
+
+V = +20 kN
+
+Tramo 8 < x < 10:
+
+V = +20 kN
+
+------------------------------------------------------------
+
+En x = 10 esta la carga P3 = 20 kN.
+
+V = +20 - 20
+
+V = 0 kN
+
+La viga queda equilibrada.
+
+------------------------------------------------------------
+
+--- RESUMEN CORTANTE ---
+
+Tramo 0 - 2 m:
+
+V = -20 kN
+
+Tramo 2 - 5 m:
+
+V = +15 kN
+
+Tramo 5 - 8 m:
+
+V = -15 kN
+
+Tramo 8 - 10 m:
+
+V = +20 kN
+
+------------------------------------------------------------
+
+--- DIAGRAMA V ASCII ---
+
+V(kN)
+
+ +20 |                         _________
+     |                        |
+ +15 |          _____________ |
+     |         |
+   0 |_________|______________|_________|____ x
+     |         |              |         |
+ -15 |         |              |_________|
+     |
+ -20 |_________|
+
+       0       2       5      8        10
+              A        P      B
+
+------------------------------------------------------------
+
+--- 3) DIAGRAMA DE MOMENTO FLECTOR M ---
+
+Usamos que:
+
+dM/dx = V
+
+Es decir:
+
+El momento se obtiene como area del cortante.
+
+En el extremo izquierdo:
+
+M(0) = 0
+
+------------------------------------------------------------
+
+Tramo 0 - 2 m:
+
+V = -20 kN
+
+M(x) = -20*x
+
+En x = 2:
+
+M(2) = -20*2
+
+M(2) = -40 kN*m
+
+Luego en el apoyo A:
+
+M_A = -40 kN*m
+
+------------------------------------------------------------
+
+Tramo 2 - 5 m:
+
+V = +15 kN
+
+M(x) = M(2) + 15*(x - 2)
+
+M(x) = -40 + 15*(x - 2)
+
+En x = 5:
+
+M(5) = -40 + 15*(5 - 2)
+
+M(5) = -40 + 45
+
+M(5) = +5 kN*m
+
+------------------------------------------------------------
+
+Tramo 5 - 8 m:
+
+V = -15 kN
+
+M(x) = M(5) - 15*(x - 5)
+
+M(x) = 5 - 15*(x - 5)
+
+En x = 8:
+
+M(8) = 5 - 15*(8 - 5)
+
+M(8) = 5 - 45
+
+M(8) = -40 kN*m
+
+Luego en el apoyo B:
+
+M_B = -40 kN*m
+
+------------------------------------------------------------
+
+Tramo 8 - 10 m:
+
+V = +20 kN
+
+M(x) = M(8) + 20*(x - 8)
+
+M(x) = -40 + 20*(x - 8)
+
+En x = 10:
+
+M(10) = -40 + 20*(10 - 8)
+
+M(10) = -40 + 40
+
+M(10) = 0 kN*m
+
+Correcto, en el extremo libre el momento vale 0.
+
+------------------------------------------------------------
+
+--- RESUMEN MOMENTOS IMPORTANTES ---
+
+M(0) = 0 kN*m
+
+M(A) = M(2) = -40 kN*m
+
+M(P) = M(5) = +5 kN*m
+
+M(B) = M(8) = -40 kN*m
+
+M(10) = 0 kN*m
+
+------------------------------------------------------------
+
+--- ECUACIONES DEL MOMENTO ---
+
+Para 0 <= x <= 2:
+
+M(x) = -20*x
+
+Para 2 <= x <= 5:
+
+M(x) = -40 + 15*(x - 2)
+
+Para 5 <= x <= 8:
+
+M(x) = 5 - 15*(x - 5)
+
+Para 8 <= x <= 10:
+
+M(x) = -40 + 20*(x - 8)
+
+Unidades:
+
+x en m
+M en kN*m
+
+------------------------------------------------------------
+
+--- PUNTOS DONDE M = 0 ---
+
+Primer cambio de signo:
+
+Tramo 2 - 5:
+
+M(x) = -40 + 15*(x - 2)
+
+0 = -40 + 15*(x - 2)
+
+15*(x - 2) = 40
+
+x - 2 = 40/15
+
+x - 2 = 2.67
+
+x = 4.67 m
+
+------------------------------------------------------------
+
+Segundo cambio de signo:
+
+Tramo 5 - 8:
+
+M(x) = 5 - 15*(x - 5)
+
+0 = 5 - 15*(x - 5)
+
+15*(x - 5) = 5
+
+x - 5 = 5/15
+
+x - 5 = 0.33
+
+x = 5.33 m
+
+------------------------------------------------------------
+
+--- DIAGRAMA M ASCII ---
+
+M(kN*m)
+
+ +5 |                 /\
+    |                /  \
+  0 |---------------/----\---------------- x
+    |              /      \
+    |             /        \
+-40 |___________ /          \ ___________
+    |          A             B
+
+      0        2     5       8       10
+
+Valores:
+
+M(0)  = 0
+M(A)  = -40 kN*m
+M(P)  = +5 kN*m
+M(B)  = -40 kN*m
+M(10) = 0
+
+------------------------------------------------------------
+
+--- CONCLUSION FINAL ---
+
+Reacciones:
+
+RA = 35 kN
+
+RB = 35 kN
+
+Cortante:
+
+V = -20 kN   entre 0 y 2 m
+V = +15 kN   entre 2 y 5 m
+V = -15 kN   entre 5 y 8 m
+V = +20 kN   entre 8 y 10 m
+
+Momentos:
+
+M(0)  = 0 kN*m
+M(A)  = -40 kN*m
+M(P)  = +5 kN*m
+M(B)  = -40 kN*m
+M(10) = 0 kN*m
+
+Maximo positivo:
+
+Mmax+ = +5 kN*m en x = 5 m
+
+Maximo negativo:
+
+Mmax- = -40 kN*m en A y B
+
+Puntos de momento nulo:
+
+x = 0 m
+x = 4.67 m
+x = 5.33 m
+x = 10 m
+
+------------------------------------------------------------
+
+--- IDEA PARA RECORDAR ---
+
+1) Primero sacar reacciones con equilibrio.
+
+2) Luego hacer el cortante de izquierda a derecha.
+
+3) Cada carga hacia abajo resta en V.
+
+4) Cada reaccion hacia arriba suma en V.
+
+5) El momento se obtiene acumulando areas del cortante.
+
+6) Si el cortante es constante, el momento es recta.
+
+7) Donde el cortante cambia de signo suele haber maximo
+   o minimo de momento.
