@@ -1,424 +1,168 @@
---- EXAMEN JUNIO 2023 ---
+--- TEXTO RANDOM TFT ---
 
-RESISTENCIA DE MATERIALES 2 GIE
-FECHA: 02-06-2023
+--- BLOQUE 1: IDEA GENERAL ---
 
---- PROBLEMA 1 ---
+Este archivo es un ejemplo de apuntes en texto plano.
 
-Campo de desplazamientos:
+Esta pensado para una pantalla TFT horizontal de 320x170.
 
-u = 4*a*x^2
-v = 8*a*z^2
-w = -2*a*y^2
+Las lineas son cortas para que no se corten al leer.
 
-Dato:
+No se usan simbolos raros ni letras dificiles.
 
-a = 10^-4 m^-1
+Todo esta escrito con formato ASCII.
 
-E = 210 GPa
-nu = 0.3
+---
 
-Se pide:
+--- BLOQUE 2: FORMULAS BASICAS ---
 
-1) Matriz de deformacion.
-2) Tensor de tensiones.
-3) Circulos de Mohr.
+Velocidad:
 
-------------------------------------------------------------
-
---- 1) MATRIZ DE DEFORMACION ---
-
-En pequenas deformaciones, la matriz de deformacion es:
-
-eps_xx = du/dx
-eps_yy = dv/dy
-eps_zz = dw/dz
-
-eps_xy = 1/2*(du/dy + dv/dx)
-eps_xz = 1/2*(du/dz + dw/dx)
-eps_yz = 1/2*(dv/dz + dw/dy)
-
-------------------------------------------------------------
-
-Derivamos cada desplazamiento:
-
-u = 4*a*x^2
-
-du/dx = 8*a*x
-du/dy = 0
-du/dz = 0
-
-v = 8*a*z^2
-
-dv/dx = 0
-dv/dy = 0
-dv/dz = 16*a*z
-
-w = -2*a*y^2
-
-dw/dx = 0
-dw/dy = -4*a*y
-dw/dz = 0
-
-------------------------------------------------------------
-
-Ahora sustituimos:
-
-eps_xx = du/dx = 8*a*x
-
-eps_yy = dv/dy = 0
-
-eps_zz = dw/dz = 0
-
-eps_xy = 1/2*(du/dy + dv/dx)
-eps_xy = 1/2*(0 + 0) = 0
-
-eps_xz = 1/2*(du/dz + dw/dx)
-eps_xz = 1/2*(0 + 0) = 0
-
-eps_yz = 1/2*(dv/dz + dw/dy)
-eps_yz = 1/2*(16*a*z - 4*a*y)
-
-eps_yz = 8*a*z - 2*a*y
-
-------------------------------------------------------------
-
-Por tanto, la matriz de deformacion queda:
-
-        | 8*a*x        0              0        |
-eps =   |   0          0        8*a*z - 2*a*y |
-        |   0    8*a*z - 2*a*y        0       |
-
-------------------------------------------------------------
-
-Como a = 10^-4:
-
-eps_xx = 8*10^-4*x
-
-eps_yz = 8*10^-4*z - 2*10^-4*y
-
-eps_yz = 10^-4*(8*z - 2*y)
-
-------------------------------------------------------------
-
---- 2) TENSOR DE TENSIONES ---
-
-Usamos la formula dada en el enunciado:
-
-sigma_ij =
-E*nu/((1+nu)*(1-2*nu))*eps_kk*delta_ij
-+
-E/(1+nu)*eps_ij
-
-Primero calculamos eps_kk:
-
-eps_kk = eps_xx + eps_yy + eps_zz
-
-eps_kk = 8*a*x + 0 + 0
-
-eps_kk = 8*a*x
-
-------------------------------------------------------------
-
-Calculamos las constantes elasticas:
-
-E = 210 GPa
-nu = 0.3
-
-A = E*nu/((1+nu)*(1-2*nu))
-
-A = 210*0.3/((1+0.3)*(1-2*0.3))
-
-A = 63/(1.3*0.4)
-
-A = 63/0.52
-
-A = 121.15 GPa
-
-------------------------------------------------------------
-
-B = E/(1+nu)
-
-B = 210/(1+0.3)
-
-B = 210/1.3
-
-B = 161.54 GPa
-
-------------------------------------------------------------
-
-La formula queda:
-
-sigma_ij = A*eps_kk*delta_ij + B*eps_ij
-
-sigma_ij = 121.15*eps_kk*delta_ij + 161.54*eps_ij
-
-------------------------------------------------------------
-
-Tension normal sigma_xx:
-
-sigma_xx = A*eps_kk + B*eps_xx
-
-sigma_xx = 121.15*(8*a*x) + 161.54*(8*a*x)
-
-sigma_xx = (121.15 + 161.54)*8*a*x
-
-sigma_xx = 282.69*8*a*x
-
-sigma_xx = 2261.52*a*x GPa
-
-Como a = 10^-4:
-
-sigma_xx = 2261.52*10^-4*x GPa
-
-sigma_xx = 0.22615*x GPa
-
-sigma_xx = 226.15*x MPa
-
-------------------------------------------------------------
-
-Tension normal sigma_yy:
-
-sigma_yy = A*eps_kk + B*eps_yy
-
-sigma_yy = 121.15*(8*a*x) + 161.54*0
-
-sigma_yy = 969.20*a*x GPa
-
-Como a = 10^-4:
-
-sigma_yy = 0.09692*x GPa
-
-sigma_yy = 96.92*x MPa
-
-------------------------------------------------------------
-
-Tension normal sigma_zz:
-
-sigma_zz = A*eps_kk + B*eps_zz
-
-sigma_zz = 121.15*(8*a*x) + 161.54*0
-
-sigma_zz = 969.20*a*x GPa
-
-Como a = 10^-4:
-
-sigma_zz = 0.09692*x GPa
-
-sigma_zz = 96.92*x MPa
-
-------------------------------------------------------------
-
-Tensiones tangenciales:
-
-sigma_xy = B*eps_xy
-
-sigma_xy = 161.54*0 = 0
-
-sigma_xz = B*eps_xz
-
-sigma_xz = 161.54*0 = 0
-
-sigma_yz = B*eps_yz
-
-sigma_yz = 161.54*(8*a*z - 2*a*y)
-
-sigma_yz = 161.54*a*(8*z - 2*y) GPa
-
-Como a = 10^-4:
-
-sigma_yz = 0.016154*(8*z - 2*y) GPa
-
-sigma_yz = 16.154*(8*z - 2*y) MPa
-
-sigma_yz = 129.23*z - 32.31*y MPa
-
-------------------------------------------------------------
-
-Por tanto, el tensor de tensiones es:
-
-             | 226.15*x        0              0        |
-sigma MPa =  |    0        96.92*x      tau_yz        |
-             |    0         tau_yz      96.92*x       |
+v = s/t
 
 donde:
 
-tau_yz = 129.23*z - 32.31*y MPa
+v = velocidad
+s = espacio recorrido
+t = tiempo
 
-------------------------------------------------------------
+Aceleracion:
 
---- 3) CIRCULOS DE MOHR ---
+a = DeltaV/DeltaT
 
-El tensor de tensiones tiene esta forma:
+Fuerza:
 
-             | sigma_x     0        0     |
-sigma =      |   0      sigma_y   tau_yz |
-             |   0       tau_yz  sigma_z |
+F = m*a
 
-con:
+Trabajo:
 
-sigma_x = 226.15*x MPa
+W = F*d
 
-sigma_y = 96.92*x MPa
+Potencia:
 
-sigma_z = 96.92*x MPa
+P = W/t
 
-tau_yz = 129.23*z - 32.31*y MPa
+---
 
-------------------------------------------------------------
+--- BLOQUE 3: ELECTRICIDAD ---
 
-Como sigma_y = sigma_z y solo hay tau_yz,
-el eje x ya es una direccion principal.
+Ley de Ohm:
 
-Entonces una tension principal es:
+V = R*I
 
-sigma_1 = sigma_x
+Potencia electrica:
 
-sigma_1 = 226.15*x MPa
+P = V*I
 
-------------------------------------------------------------
+Tambien:
 
-Las otras dos tensiones principales salen del bloque y-z:
+P = R*I^2
 
-        | sigma_y   tau_yz |
-        | tau_yz   sigma_z |
+P = V^2/R
 
-Como sigma_y = sigma_z:
+Resistencias en serie:
 
-sigma_2 = sigma_y + tau_yz
+Req = R1 + R2 + R3
 
-sigma_3 = sigma_y - tau_yz
+Resistencias en paralelo:
 
-Por tanto:
+1/Req = 1/R1 + 1/R2 + 1/R3
 
-sigma_2 = 96.92*x + tau_yz
+Para dos resistencias:
 
-sigma_3 = 96.92*x - tau_yz
+Req = (R1*R2)/(R1+R2)
 
-Sustituyendo tau_yz:
+---
 
-sigma_2 = 96.92*x + 129.23*z - 32.31*y
+--- BLOQUE 4: MECANICA ---
 
-sigma_3 = 96.92*x - 129.23*z + 32.31*y
+Equilibrio de fuerzas:
 
-Todo en MPa.
+sum Fx = 0
 
-------------------------------------------------------------
+sum Fy = 0
 
---- RESUMEN TENSIONES PRINCIPALES ---
+Equilibrio de momentos:
 
-sigma_1 = 226.15*x
+sum M = 0
 
-sigma_2 = 96.92*x + 129.23*z - 32.31*y
+Momento de una fuerza:
 
-sigma_3 = 96.92*x - 129.23*z + 32.31*y
+M = F*d
 
-Unidades: MPa
+donde:
 
-------------------------------------------------------------
+F = fuerza aplicada
+d = distancia perpendicular al punto de giro
 
---- CIRCULO DE MOHR ENTRE sigma_2 Y sigma_3 ---
+---
 
-Centro:
+--- BLOQUE 5: RESISTENCIA DE MATERIALES ---
 
-C_23 = (sigma_2 + sigma_3)/2
+Tension normal:
 
-C_23 = 96.92*x MPa
+sigma = N/A
 
-Radio:
+Deformacion unitaria:
 
-R_23 = abs((sigma_2 - sigma_3)/2)
+eps = DeltaL/L0
 
-R_23 = abs(tau_yz)
+Ley de Hooke:
 
-R_23 = abs(129.23*z - 32.31*y) MPa
+sigma = E*eps
 
-------------------------------------------------------------
+Flexion simple:
 
---- CIRCULO DE MOHR ENTRE sigma_1 Y sigma_2 ---
+sigma = M*y/I
 
-Centro:
+Tension maxima en flexion:
 
-C_12 = (sigma_1 + sigma_2)/2
+sigma_max = M*ymax/I
 
-Radio:
+Para seccion rectangular:
 
-R_12 = abs(sigma_1 - sigma_2)/2
+I = b*h^3/12
 
-------------------------------------------------------------
+---
 
---- CIRCULO DE MOHR ENTRE sigma_1 Y sigma_3 ---
+--- BLOQUE 6: RECORDATORIO RAPIDO ---
 
-Centro:
+Si una carga baja, el cortante V baja.
 
-C_13 = (sigma_1 + sigma_3)/2
+Si una reaccion sube, el cortante V sube.
 
-Radio:
+Si V es constante, M es una recta.
 
-R_13 = abs(sigma_1 - sigma_3)/2
+Si V es una recta, M es una parabola.
 
-------------------------------------------------------------
+Donde V = 0 puede haber maximo o minimo de M.
 
---- DIBUJO ESQUEMATICO ---
+En los extremos libres normalmente M = 0.
 
-Eje horizontal: sigma
-Eje vertical: tau
+En apoyos simples el momento no tiene por que ser 0
+si hay voladizos o cargas fuera del vano.
 
-        tau
-         |
-         |
-         |        ooooooooo
-         |     ooo         ooo
-         |   oo               oo
----------+-------------------------- sigma
-         |   oo               oo
-         |     ooo         ooo
-         |        ooooooooo
-         |
+---
 
-Hay 3 circulos de Mohr:
+--- BLOQUE 7: MINI EJEMPLO ---
 
-Circulo 12: entre sigma_1 y sigma_2
-Circulo 13: entre sigma_1 y sigma_3
-Circulo 23: entre sigma_2 y sigma_3
+Datos:
 
-------------------------------------------------------------
+F = 100 N
+d = 0.5 m
 
---- COMENTARIO IMPORTANTE ---
+Momento:
 
-No se pueden dibujar los circulos con numeros cerrados
-porque el enunciado no da las coordenadas del punto P.
+M = F*d
 
-Por eso el resultado queda en funcion de x, y, z.
+M = 100*0.5
 
-Si el examen diera un punto, por ejemplo P(1,2,3),
-se sustituirian x, y, z y ya saldrian los circulos
-con centros y radios numericos.
+M = 50 N*m
 
-------------------------------------------------------------
+Resultado:
 
---- RESULTADO FINAL ---
+M = 50 N*m
 
-Matriz de deformacion:
+---
 
-        | 8*a*x        0              0        |
-eps =   |   0          0        8*a*z - 2*a*y |
-        |   0    8*a*z - 2*a*y        0       |
-
-Tensor de tensiones:
-
-             | 226.15*x        0              0        |
-sigma MPa =  |    0        96.92*x      tau_yz        |
-             |    0         tau_yz      96.92*x       |
-
-tau_yz = 129.23*z - 32.31*y MPa
-
-Tensiones principales:
-
-sigma_1 = 226.15*x
-
-sigma_2 = 96.92*x + 129.23*z - 32.31*y
-
-sigma_3 = 96.92*x - 129.23*z + 32.31*y
-
-Unidades: MPa
+--- FIN DEL TEXTO ---
