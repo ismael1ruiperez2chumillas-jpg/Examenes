@@ -1,695 +1,470 @@
---- EXAMEN COMPLETO ---
+--- PROBLEMA: DEFORMACIONES Y TENSIONES ---
 
---- CUESTION 1 ---
+Campo de desplazamientos:
 
---- a) NUMERO DE CELULAS NECESARIO ---
+u = 4*a*x^2
+v = 8*a*z^2
+w = -2*a*y^2
 
 Datos:
 
-T_usuario = 12 mE = 12*10^-3 E
+a = 10^-4 m^-1
+E = 210 GPa
+nu = 0.3
 
-Lp = 20 + 40*log10(d)
+Punto:
 
-(C/I)_min = 17 dB
-
-gamma = 4
-
-N_canales = 130
-
-Pb = 1%
-
-D = 700 usuarios/km^2
-
-S = 30 km^2
-
-Sectorizacion triple:
-
-s = 3
+P(1/2, 1, 1)
 
 ---
 
---- 1) CALCULO POR COBERTURA ---
+--- 1) MATRIZ DE DEFORMACION ---
 
---- Enlace descendente BTS -> MS ---
+La matriz de deformacion se calcula con:
 
-Pt_BTS = 10*log10(40) + 30
+eps_ij = 1/2*(du_i/dx_j + du_j/dx_i)
 
-Pt_BTS = 46 dBm
+Es decir:
 
-PIRE_BTS = Pt_BTS - L_comb - L_cable_TX + G_ant_BTS
+eps_xx = du/dx
+eps_yy = dv/dy
+eps_zz = dw/dz
 
-PIRE_BTS = 46 - 6 - 10 + 5
+eps_xy = 1/2*(du/dy + dv/dx)
 
-PIRE_BTS = 35 dBm
+eps_xz = 1/2*(du/dz + dw/dx)
 
-PIU_MS = S_MS + L_duplexor_MS + L_conector_MS - G_ant_MS
-
-PIU_MS = -114 + 5 + 4 - 2
-
-PIU_MS = -107 dBm
-
-Lp_max_desc = PIRE_BTS - PIU_MS
-
-Lp_max_desc = 35 - (-107)
-
-Lp_max_desc = 142 dB
+eps_yz = 1/2*(dv/dz + dw/dy)
 
 ---
 
---- Enlace ascendente MS -> BTS ---
+Calculamos derivadas:
 
-Pt_MS = 10*log10(5) + 30
+u = 4*a*x^2
 
-Pt_MS = 37 dBm
+du/dx = 8*a*x
+du/dy = 0
+du/dz = 0
 
-PIRE_MS = Pt_MS - L_duplexor_MS - L_conector_MS + G_ant_MS
+v = 8*a*z^2
 
-PIRE_MS = 37 - 5 - 4 + 2
+dv/dx = 0
+dv/dy = 0
+dv/dz = 16*a*z
 
-PIRE_MS = 30 dBm
+w = -2*a*y^2
 
-PIU_BTS = S_BTS + L_div + L_cable_RX
-- G_diversidad - G_amp_RX - G_ant_BTS
-
-PIU_BTS = -120 + 4 + 30 - 4 - 20 - 5
-
-PIU_BTS = -115 dBm
-
-Lp_max_asc = PIRE_MS - PIU_BTS
-
-Lp_max_asc = 30 - (-115)
-
-Lp_max_asc = 145 dB
+dw/dx = 0
+dw/dy = -4*a*y
+dw/dz = 0
 
 ---
 
-El peor enlace es el descendente:
+Sustituimos en la matriz:
 
-Lp_max = 142 dB
+eps_xx = du/dx = 8*a*x
 
----
+eps_yy = dv/dy = 0
 
---- Radio celular por cobertura ---
+eps_zz = dw/dz = 0
 
-Lp = 20 + 40*log10(d)
+eps_xy = 1/2*(du/dy + dv/dx)
 
-142 = 20 + 40*log10(d)
+eps_xy = 1/2*(0 + 0)
 
-log10(d) = (142 - 20)/40
+eps_xy = 0
 
-d = 10^((142 - 20)/40)
+eps_xz = 1/2*(du/dz + dw/dx)
 
-d = 1122 m
+eps_xz = 1/2*(0 + 0)
 
-d = 1.122 km
+eps_xz = 0
 
-Area_celda = pi*R^2
+eps_yz = 1/2*(dv/dz + dw/dy)
 
-Area_celda = pi*(1.122)^2
+eps_yz = 1/2*(16*a*z - 4*a*y)
 
-Area_celda = 3.96 km^2
-
-N_celdas_cobertura = S/Area_celda
-
-N_celdas_cobertura = 30/3.96
-
-N_celdas_cobertura = 7.57
-
-N_celdas_cobertura = 8
+eps_yz = 8*a*z - 2*a*y
 
 ---
 
---- 2) CALCULO POR TRAFICO ---
+Por tanto:
 
-Primero calculamos el patron celular K.
+[eps] =
 
-(C/I)_min = 17 dB
+| 8*a*x        0              0        |
+|   0          0        8*a*z - 2*a*y |
+|   0    8*a*z - 2*a*y        0       |
 
-C/I = 10^(17/10)
+---
 
-C/I = 50.11
+--- 2) DEFORMACIONES PRINCIPALES EN P ---
 
-Formula de interferencia:
+Punto:
 
-C/I = (s/6)*q^gamma
+P(1/2, 1, 1)
 
-Como hay sectorizacion triple:
+Por tanto:
 
-s = 3
+x = 1/2
+y = 1
+z = 1
 
-50.11 < (3/6)*q^4
+Sustituimos en la matriz de deformacion.
 
-50.11 < 0.5*q^4
+eps_xx = 8*a*x
 
-q^4 > 100.22
+eps_xx = 8*a*(1/2)
+
+eps_xx = 4*a
+
+---
+
+eps_yz = 8*a*z - 2*a*y
+
+eps_yz = 8*a*(1) - 2*a*(1)
+
+eps_yz = 8*a - 2*a
+
+eps_yz = 6*a
+
+---
 
 Como:
 
-q = sqrt(3*K)
+a = 10^-4
+
+queda:
+
+[eps]_P =
+
+| 4*10^-4      0            0      |
+|    0         0        6*10^-4    |
+|    0     6*10^-4        0        |
+
+---
+
+Para obtener las deformaciones principales,
+sacamos los autovalores de la matriz.
+
+Planteamos:
+
+| 4*a - eps      0          0      |
+|    0        -eps        6*a     | = 0
+|    0         6*a       -eps     |
+
+El determinante queda:
+
+(4*a - eps)*(eps^2 - 36*a^2) = 0
+
+Por tanto:
+
+4*a - eps = 0
+
+eps = 4*a
+
+Y tambien:
+
+eps^2 - 36*a^2 = 0
+
+eps^2 = 36*a^2
+
+eps = +/- 6*a
+
+---
+
+Deformaciones principales:
+
+eps_1 = 6*a
+
+eps_2 = 4*a
+
+eps_3 = -6*a
+
+Como a = 10^-4:
+
+eps_1 = 6*10^-4
+
+eps_2 = 4*10^-4
+
+eps_3 = -6*10^-4
+
+---
+
+--- DIRECCIONES PRINCIPALES ---
+
+Para eps_1 = 6*a:
+
+n_1 = (0, 1/sqrt(2), 1/sqrt(2))
+
+---
+
+Para eps_2 = 4*a:
+
+n_2 = (1, 0, 0)
+
+---
+
+Para eps_3 = -6*a:
+
+n_3 = (0, 1/sqrt(2), -1/sqrt(2))
+
+---
+
+--- 3) TENSOR DE TENSIONES ---
+
+La formula del enunciado es:
+
+sigma_ij =
+E*nu/((1+nu)*(1-2*nu))*eps_kk*delta_ij
++
+E/(1+nu)*eps_ij
+
+---
+
+Primero calculamos:
+
+eps_kk = eps_xx + eps_yy + eps_zz
+
+eps_kk = 8*a*x + 0 + 0
+
+eps_kk = 8*a*x
+
+---
+
+Calculamos constantes elasticas:
+
+A = E*nu/((1+nu)*(1-2*nu))
+
+A = 210*0.3/((1+0.3)*(1-2*0.3))
+
+A = 63/(1.3*0.4)
+
+A = 63/0.52
+
+A = 121.154 GPa
+
+---
+
+B = E/(1+nu)
+
+B = 210/(1+0.3)
+
+B = 210/1.3
+
+B = 161.538 GPa
+
+---
 
 Entonces:
 
-(sqrt(3*K))^4 > 100.22
+sigma_ij = A*eps_kk*delta_ij + B*eps_ij
 
-(3*K)^2 > 100.22
-
-K > 3.33
-
-Patron valido:
-
-K = 4
+sigma_ij = 121.154*eps_kk*delta_ij
++ 161.538*eps_ij
 
 ---
 
---- Canales por celula y sector ---
+--- TENSOR DE TENSIONES GENERAL ---
 
-N_canales_celda = N_canales/K
+sigma_xx = A*eps_kk + B*eps_xx
 
-N_canales_celda = 130/4
+sigma_xx = 121.154*(8*a*x) + 161.538*(8*a*x)
 
-N_canales_celda = 32.5
+sigma_xx = (121.154 + 161.538)*8*a*x
 
-Tomamos:
-
-N_canales_celda = 32
-
-N_canales_sector = 32/3
-
-N_canales_sector = 10.66
-
-Tomamos:
-
-N_canales_sector = 10
+sigma_xx = 2261.536*a*x GPa
 
 ---
 
-De la tabla Erlang-B:
+sigma_yy = A*eps_kk + B*eps_yy
 
-Para:
+sigma_yy = 121.154*(8*a*x) + 161.538*0
 
-N = 10 canales
-
-Pb = 1%
-
-A_sector = 4.409 E
+sigma_yy = 969.232*a*x GPa
 
 ---
 
---- Usuarios por sector ---
+sigma_zz = A*eps_kk + B*eps_zz
 
-N_usuarios_sector = A_sector/T_usuario
+sigma_zz = 121.154*(8*a*x) + 161.538*0
 
-N_usuarios_sector = 4.409/(12*10^-3)
-
-N_usuarios_sector = 367.4 usuarios
+sigma_zz = 969.232*a*x GPa
 
 ---
 
---- Usuarios por celula ---
+sigma_yz = B*eps_yz
 
-N_usuarios_celda = 367.4*3
+sigma_yz = 161.538*(8*a*z - 2*a*y)
 
-N_usuarios_celda = 1102 usuarios
-
----
-
---- Area maxima por trafico ---
-
-Area_celda = N_usuarios_celda/D
-
-Area_celda = 1102/700
-
-Area_celda = 1.57 km^2
+sigma_yz = 161.538*a*(8*z - 2*y) GPa
 
 ---
 
---- Numero de celulas por trafico ---
+sigma_xy = 0
 
-N_celdas_trafico = S/Area_celda
-
-N_celdas_trafico = 30/1.57
-
-N_celdas_trafico = 19.1
-
-N_celdas_trafico = 20
+sigma_xz = 0
 
 ---
 
---- Resultado final cuestion 1a ---
+Como a = 10^-4, pasamos a MPa.
 
-N_celdas = max(8,20)
+Recordatorio:
 
-N_celdas = 20
+1 GPa = 1000 MPa
 
----
+Entonces:
 
---- b) MARGEN DE DESVANECIMIENTO ---
+sigma_xx = 226.154*x MPa
 
-El margen de desvanecimiento es necesario porque la
-potencia recibida no es constante.
+sigma_yy = 96.923*x MPa
 
-Aunque el balance se calcule para una distancia concreta,
-en la realidad la senal puede disminuir por:
+sigma_zz = 96.923*x MPa
 
-multitrayecto
-shadowing
-obstaculos
-movimiento del usuario
-reflexiones
-variaciones del canal radio
-
-El margen es una reserva de potencia.
-
-M = P_RX - S
-
-Si M es grande, el enlace soporta mas perdidas antes
-de caer por debajo de la sensibilidad.
-
-Si M es pequeno, una pequena atenuacion puede hacer que
-la comunicacion falle.
-
-En comunicaciones moviles no se pone principalmente por
-lluvia, sino por el comportamiento variable del canal radio.
+sigma_yz = 129.231*z - 32.308*y MPa
 
 ---
 
----
+Por tanto:
 
---- CUESTION 2 ---
+[sigma] =
 
---- a) NUMERO NECESARIO DE CANALES DEL SISTEMA ---
+| 226.154*x        0              0        |
+|     0        96.923*x       sigma_yz    |
+|     0         sigma_yz      96.923*x    |
 
-Datos:
+donde:
 
-T_usuario = 5 mE = 5*10^-3 E
+sigma_yz = 129.231*z - 32.308*y
 
-Lp = 20 + 35*log10(d)
-
-(C/I)_min = 12 dB
-
-gamma = 3.5
-
-D = 800 usuarios/km^2
-
-Pb = 1.5%
-
-M = 20 dB
-
-No hay sectorizacion:
-
-s = 1
+Unidades: MPa
 
 ---
 
---- 1) BALANCE POR COBERTURA ---
+--- 4) TENSOR DE TENSIONES EN P ---
 
---- Enlace descendente BTS -> MS ---
+Punto:
 
-Pt_BTS = 10*log10(20) + 30
-
-Pt_BTS = 43 dBm
-
-PIRE_BTS = Pt_BTS - L_duplexor - L_cable
-+ G_amp_TX + G_ant_BTS
-
-PIRE_BTS = 43 - 3 - 42 + 22 + 10
-
-PIRE_BTS = 30 dBm
-
-PIU_MS = S_MS + M + L_conector_MS
-- G_amp_MS - G_ant_MS
-
-PIU_MS = -115 + 20 + 5 - 4 - 0.5
-
-PIU_MS = -94.5 dBm
-
-Lp_max_desc = PIRE_BTS - PIU_MS
-
-Lp_max_desc = 30 - (-94.5)
-
-Lp_max_desc = 124.5 dB
-
----
-
---- Enlace ascendente MS -> BTS ---
-
-Pt_MS = 10*log10(8) + 30
-
-Pt_MS = 39 dBm
-
-PIRE_MS = Pt_MS - L_conector_MS + G_amp_MS + G_ant_MS
-
-PIRE_MS = 39 - 5 + 4 + 0.5
-
-PIRE_MS = 38.5 dBm
-
-PIU_BTS = S_BTS + M + L_duplexor + L_cable
-- G_amp_RX - G_ant_BTS
-
-PIU_BTS = -125 + 20 + 3 + 42 - 10 - 10
-
-PIU_BTS = -80 dBm
-
-Lp_max_asc = PIRE_MS - PIU_BTS
-
-Lp_max_asc = 38.5 - (-80)
-
-Lp_max_asc = 118.5 dB
-
----
-
-El peor enlace es el ascendente:
-
-Lp_max = 118.5 dB
-
----
-
---- Radio celular ---
-
-Lp = 20 + 35*log10(d)
-
-118.5 = 20 + 35*log10(d)
-
-log10(d) = (118.5 - 20)/35
-
-d = 10^((118.5 - 20)/35)
-
-d = 652 m
-
-d = 0.652 km
-
-Area_celda = pi*R^2
-
-Area_celda = pi*(0.652)^2
-
-Area_celda = 1.34 km^2
-
----
-
---- Usuarios por celula ---
-
-N_usuarios_celda = Area_celda*D
-
-N_usuarios_celda = 1.34*800
-
-N_usuarios_celda = 1072 usuarios
-
----
-
---- Trafico por celula ---
-
-A_trafico = N_usuarios_celda*T_usuario
-
-A_trafico = 1072*5*10^-3
-
-A_trafico = 5.36 E
-
----
-
-Con Erlang-B:
-
-Pb = 1.5%
-
-Para A = 5.36 E se necesitan:
-
-N = 11 canales/celda
-
-porque con 10 canales no llega y con 11 si.
-
----
-
---- 2) PATRON CELULAR ---
-
-(C/I)_min = 12 dB
-
-C/I = 10^(12/10)
-
-C/I = 15.85
-
-Formula:
-
-C/I = (s/6)*q^gamma
-
-Como no hay sectorizacion:
-
-s = 1
-
-15.85 < (1/6)*q^3.5
-
-q^3.5 > 15.85*6
-
-q^3.5 > 95.1
-
-q > 3.67
-
-Como:
-
-q = sqrt(3*K)
-
-sqrt(3*K) > 3.67
-
-3*K > 3.67^2
-
-K > 4.5
-
-El siguiente patron celular valido es:
-
-K = 7
-
----
-
---- Numero de canales del sistema ---
-
-N_canales_sistema = N_canales_celda*K
-
-N_canales_sistema = 11*7
-
-N_canales_sistema = 77
-
----
-
---- Resultado final cuestion 2a ---
-
-N_canales_sistema = 77 canales
-
----
-
---- b) TECNICA SIN AUMENTAR CANALES ---
-
-Una tecnica para aumentar la capacidad sin aumentar el
-numero total de canales es la division celular.
-
-Consiste en reducir el radio de las celulas:
-
-R disminuye
-
-Al reducir el radio, tambien disminuye el area:
-
-Area_celda = pi*R^2
-
-Por tanto, en la misma zona caben mas celulas.
-
-Como cada celula reutiliza los canales disponibles,
-aumenta la capacidad por km^2.
-
-No hace falta aumentar el numero total de canales del
-sistema.
-
-Tambien podria usarse sectorizacion si permite reducir
-el patron celular K.
-
-Pero no sirve si simplemente se sectoriza manteniendo
-el mismo K.
-
----
-
----
-
---- CUESTION 3 ---
-
---- a) POTENCIA NECESARIA ---
-
-Datos:
-
-f = 28 GHz
-
-d = 30 km
-
-A_0.007% = 33 dB
-
-p = 0.008%
-
-S = -110 dBm
-
-No se consideran gases ni moleculas.
-
----
-
-De la grafica, para la curva:
-
-A_0.007% = 33 dB
-
-y para:
-
-p = 0.008%
-
-se toma aproximadamente:
-
-A_p = 31.5 dB
-
-Por tanto, el margen necesario es:
-
-M = 31.5 dB
-
----
-
---- Perdidas de propagacion ---
-
-lambda = c/f
-
-lambda = (3*10^8)/(28*10^9)
-
-lambda = 0.0107 m
-
-Formula de espacio libre:
-
-Lp = 20*log10((4*pi*d)/lambda)
-
-d = 30000 m
-
-Lp = 20*log10((4*pi*30000)/0.0107)
-
-Lp = 150.9 dB
-
----
-
---- Balance del radioenlace ---
-
-Del esquema:
-
-G_amp_TX = 10 dB
-
-L_comb = 8 dB
-
-G_ant_TX = 15 dBi
-
-G_ant_RX = 15 dBi
-
-L_duplexor = 5 dB
-
-G_amp_RX = 12 dB
-
-La incognita es:
-
-Pt
-
----
-
-Formula del margen:
-
-M = Pt + G_amp_TX - L_comb + G_ant_TX
-- Lp + G_ant_RX - L_duplexor
-+ G_amp_RX - S
+P(1/2, 1, 1)
 
 Sustituimos:
 
-31.5 = Pt + 10 - 8 + 15 - 150.9
-+ 15 - 5 + 12 - (-110)
-
-Agrupando:
-
-31.5 = Pt - 1.9
-
-Pt = 31.5 + 1.9
-
-Pt = 33.4 dBm
+x = 1/2
+y = 1
+z = 1
 
 ---
 
---- Paso de dBm a W ---
+sigma_xx = 226.154*x
 
-P(W) = 10^((P_dBm - 30)/10)
+sigma_xx = 226.154*(1/2)
 
-P(W) = 10^((33.4 - 30)/10)
-
-P(W) = 2.2 W
+sigma_xx = 113.077 MPa
 
 ---
 
---- Resultado final cuestion 3a ---
+sigma_yy = 96.923*x
 
-Pt = 33.4 dBm
+sigma_yy = 96.923*(1/2)
 
-Pt = 2.2 W aproximadamente
-
----
-
---- b) DESVANECIMIENTO SELECTIVO ---
-
-La probabilidad de no fidelidad por desvanecimiento
-selectivo se calcula con:
-
-P_TS = eta*4.32*k*(tau_m/Ts)^2*100%
+sigma_yy = 48.462 MPa
 
 ---
 
---- Influencia de eta ---
+sigma_zz = 96.923*x
 
-eta representa un factor asociado al enlace y al entorno.
+sigma_zz = 96.923*(1/2)
 
-Si eta aumenta, aumenta directamente la probabilidad de
-no fidelidad selectiva.
-
-eta aumenta  ->  P_TS aumenta
+sigma_zz = 48.462 MPa
 
 ---
 
---- Influencia de k ---
+sigma_yz = 129.231*z - 32.308*y
 
-k representa la sensibilidad del sistema o de la
-modulacion frente al desvanecimiento selectivo.
+sigma_yz = 129.231*(1) - 32.308*(1)
 
-Si k aumenta, el sistema es mas sensible al multitrayecto.
-
-k aumenta  ->  P_TS aumenta
+sigma_yz = 96.923 MPa
 
 ---
 
---- Influencia de tau_m ---
+Tensor de tensiones en P:
 
-tau_m es el retardo medio por multitrayecto.
+[sigma]_P =
 
-Si tau_m aumenta, las copias de la senal llegan mas
-separadas en el tiempo.
+| 113.077      0           0      |
+|    0      48.462      96.923   |
+|    0      96.923      48.462   |
 
-Eso produce mas interferencia entre simbolos.
-
-tau_m aumenta  ->  P_TS aumenta
-
----
-
---- Influencia de Ts ---
-
-Ts es el tiempo de simbolo.
-
-Si Ts aumenta, cada simbolo dura mas.
-
-Entonces el mismo retardo multicamino afecta menos.
-
-Ts aumenta  ->  P_TS disminuye
+Unidades: MPa
 
 ---
 
---- Resumen cuestion 3b ---
+--- RESULTADOS FINALES ---
 
-eta aumenta     -> P_TS aumenta
+Matriz de deformacion general:
 
-k aumenta       -> P_TS aumenta
+[eps] =
 
-tau_m aumenta   -> P_TS aumenta
-
-Ts aumenta      -> P_TS disminuye
+| 8*a*x        0              0        |
+|   0          0        8*a*z - 2*a*y |
+|   0    8*a*z - 2*a*y        0       |
 
 ---
 
---- FIN DEL EXAMEN ---
+Matriz de deformacion en P:
+
+[eps]_P =
+
+| 4*10^-4      0            0      |
+|    0         0        6*10^-4    |
+|    0     6*10^-4        0        |
+
+---
+
+Deformaciones principales:
+
+eps_1 = 6*10^-4
+
+eps_2 = 4*10^-4
+
+eps_3 = -6*10^-4
+
+---
+
+Direcciones principales:
+
+n_1 = (0, 1/sqrt(2), 1/sqrt(2))
+
+n_2 = (1, 0, 0)
+
+n_3 = (0, 1/sqrt(2), -1/sqrt(2))
+
+---
+
+Tensor de tensiones general:
+
+[sigma] =
+
+| 226.154*x        0              0        |
+|     0        96.923*x       sigma_yz    |
+|     0         sigma_yz      96.923*x    |
+
+sigma_yz = 129.231*z - 32.308*y
+
+Unidades: MPa
+
+---
+
+Tensor de tensiones en P:
+
+[sigma]_P =
+
+| 113.077      0           0      |
+|    0      48.462      96.923   |
+|    0      96.923      48.462   |
+
+Unidades: MPa
+
+---
+
+--- FIN DEL PROBLEMA ---
