@@ -1,185 +1,695 @@
---- APUNTES RANDOM TFT ---
+--- EXAMEN COMPLETO ---
 
---- BLOQUE 1: ENERGIA Y POTENCIA ---
+--- CUESTION 1 ---
 
-La energia mide la capacidad de producir trabajo.
+--- a) NUMERO DE CELULAS NECESARIO ---
 
-En mecanica, el trabajo se calcula como:
+Datos:
 
-W = F*d
+T_usuario = 12 mE = 12*10^-3 E
 
-donde:
+Lp = 20 + 40*log10(d)
 
-W = trabajo en J
-F = fuerza en N
-d = desplazamiento en m
+(C/I)_min = 17 dB
 
-Si la fuerza no va en la misma direccion:
+gamma = 4
 
-W = F*d*cos(theta)
+N_canales = 130
 
-La potencia indica la rapidez con la que se hace trabajo.
+Pb = 1%
 
-P = W/t
+D = 700 usuarios/km^2
 
-donde:
+S = 30 km^2
 
-P = potencia en W
-W = trabajo en J
-t = tiempo en s
+Sectorizacion triple:
+
+s = 3
 
 ---
 
---- BLOQUE 2: CIRCUITOS ELECTRICOS ---
+--- 1) CALCULO POR COBERTURA ---
 
-Ley de Ohm:
+--- Enlace descendente BTS -> MS ---
 
-V = R*I
+Pt_BTS = 10*log10(40) + 30
 
-donde:
+Pt_BTS = 46 dBm
 
-V = tension en V
-R = resistencia en ohm
-I = intensidad en A
+PIRE_BTS = Pt_BTS - L_comb - L_cable_TX + G_ant_BTS
 
-Potencia electrica:
+PIRE_BTS = 46 - 6 - 10 + 5
 
-P = V*I
+PIRE_BTS = 35 dBm
 
-Tambien se puede escribir como:
+PIU_MS = S_MS + L_duplexor_MS + L_conector_MS - G_ant_MS
 
-P = R*I^2
+PIU_MS = -114 + 5 + 4 - 2
 
-o tambien:
+PIU_MS = -107 dBm
 
-P = V^2/R
+Lp_max_desc = PIRE_BTS - PIU_MS
 
-Si hay resistencias en serie:
+Lp_max_desc = 35 - (-107)
 
-Req = R1 + R2 + R3
-
-Si hay resistencias en paralelo:
-
-1/Req = 1/R1 + 1/R2 + 1/R3
-
-Para dos resistencias en paralelo:
-
-Req = (R1*R2)/(R1+R2)
+Lp_max_desc = 142 dB
 
 ---
 
---- BLOQUE 3: RESISTENCIA DE MATERIALES ---
+--- Enlace ascendente MS -> BTS ---
 
-La tension normal se calcula como:
+Pt_MS = 10*log10(5) + 30
 
-sigma = N/A
+Pt_MS = 37 dBm
 
-donde:
+PIRE_MS = Pt_MS - L_duplexor_MS - L_conector_MS + G_ant_MS
 
-sigma = tension normal
-N = esfuerzo axial
-A = area de la seccion
+PIRE_MS = 37 - 5 - 4 + 2
 
-La deformacion unitaria es:
+PIRE_MS = 30 dBm
 
-eps = DeltaL/L0
+PIU_BTS = S_BTS + L_div + L_cable_RX
+- G_diversidad - G_amp_RX - G_ant_BTS
 
-donde:
+PIU_BTS = -120 + 4 + 30 - 4 - 20 - 5
 
-eps = deformacion
-DeltaL = alargamiento
-L0 = longitud inicial
+PIU_BTS = -115 dBm
 
-Ley de Hooke:
+Lp_max_asc = PIRE_MS - PIU_BTS
 
-sigma = E*eps
+Lp_max_asc = 30 - (-115)
 
-donde:
-
-E = modulo de Young
-
-Si aumenta E, el material es mas rigido.
+Lp_max_asc = 145 dB
 
 ---
 
---- BLOQUE 4: FLEXION SIMPLE ---
+El peor enlace es el descendente:
 
-En flexion, la tension normal vale:
-
-sigma = M*y/I
-
-donde:
-
-M = momento flector
-y = distancia al eje neutro
-I = momento de inercia
-
-La tension maxima aparece en la fibra mas alejada:
-
-sigma_max = M*ymax/I
-
-Si la seccion es simetrica:
-
-ymax = h/2
-
-Para una seccion rectangular:
-
-I = b*h^3/12
+Lp_max = 142 dB
 
 ---
 
---- BLOQUE 5: IDEA DE EXAMEN ---
+--- Radio celular por cobertura ---
 
-Pasos para resolver una viga:
+Lp = 20 + 40*log10(d)
 
-1. Dibujar cargas y apoyos.
+142 = 20 + 40*log10(d)
 
-2. Calcular reacciones con equilibrio.
+log10(d) = (142 - 20)/40
 
-3. Hacer diagrama de cortante V.
+d = 10^((142 - 20)/40)
 
-4. Hacer diagrama de momento M.
+d = 1122 m
 
-5. Buscar maximos y minimos.
+d = 1.122 km
 
-6. Aplicar formulas de tension si se pide.
+Area_celda = pi*R^2
 
-Equilibrio basico:
+Area_celda = pi*(1.122)^2
 
-sum Fx = 0
+Area_celda = 3.96 km^2
 
-sum Fy = 0
+N_celdas_cobertura = S/Area_celda
 
-sum M = 0
+N_celdas_cobertura = 30/3.96
 
----
+N_celdas_cobertura = 7.57
 
---- BLOQUE 6: RECORDATORIO RAPIDO ---
-
-Carga puntual hacia abajo:
-
-V baja de golpe.
-
-Reaccion hacia arriba:
-
-V sube de golpe.
-
-Carga distribuida constante:
-
-V es una recta inclinada.
-
-Si V es constante:
-
-M es una recta.
-
-Si V es una recta:
-
-M es una parabola.
-
-Donde V = 0:
-
-puede haber maximo o minimo de M.
+N_celdas_cobertura = 8
 
 ---
 
---- FIN DEL TEXTO RANDOM ---
+--- 2) CALCULO POR TRAFICO ---
+
+Primero calculamos el patron celular K.
+
+(C/I)_min = 17 dB
+
+C/I = 10^(17/10)
+
+C/I = 50.11
+
+Formula de interferencia:
+
+C/I = (s/6)*q^gamma
+
+Como hay sectorizacion triple:
+
+s = 3
+
+50.11 < (3/6)*q^4
+
+50.11 < 0.5*q^4
+
+q^4 > 100.22
+
+Como:
+
+q = sqrt(3*K)
+
+Entonces:
+
+(sqrt(3*K))^4 > 100.22
+
+(3*K)^2 > 100.22
+
+K > 3.33
+
+Patron valido:
+
+K = 4
+
+---
+
+--- Canales por celula y sector ---
+
+N_canales_celda = N_canales/K
+
+N_canales_celda = 130/4
+
+N_canales_celda = 32.5
+
+Tomamos:
+
+N_canales_celda = 32
+
+N_canales_sector = 32/3
+
+N_canales_sector = 10.66
+
+Tomamos:
+
+N_canales_sector = 10
+
+---
+
+De la tabla Erlang-B:
+
+Para:
+
+N = 10 canales
+
+Pb = 1%
+
+A_sector = 4.409 E
+
+---
+
+--- Usuarios por sector ---
+
+N_usuarios_sector = A_sector/T_usuario
+
+N_usuarios_sector = 4.409/(12*10^-3)
+
+N_usuarios_sector = 367.4 usuarios
+
+---
+
+--- Usuarios por celula ---
+
+N_usuarios_celda = 367.4*3
+
+N_usuarios_celda = 1102 usuarios
+
+---
+
+--- Area maxima por trafico ---
+
+Area_celda = N_usuarios_celda/D
+
+Area_celda = 1102/700
+
+Area_celda = 1.57 km^2
+
+---
+
+--- Numero de celulas por trafico ---
+
+N_celdas_trafico = S/Area_celda
+
+N_celdas_trafico = 30/1.57
+
+N_celdas_trafico = 19.1
+
+N_celdas_trafico = 20
+
+---
+
+--- Resultado final cuestion 1a ---
+
+N_celdas = max(8,20)
+
+N_celdas = 20
+
+---
+
+--- b) MARGEN DE DESVANECIMIENTO ---
+
+El margen de desvanecimiento es necesario porque la
+potencia recibida no es constante.
+
+Aunque el balance se calcule para una distancia concreta,
+en la realidad la senal puede disminuir por:
+
+multitrayecto
+shadowing
+obstaculos
+movimiento del usuario
+reflexiones
+variaciones del canal radio
+
+El margen es una reserva de potencia.
+
+M = P_RX - S
+
+Si M es grande, el enlace soporta mas perdidas antes
+de caer por debajo de la sensibilidad.
+
+Si M es pequeno, una pequena atenuacion puede hacer que
+la comunicacion falle.
+
+En comunicaciones moviles no se pone principalmente por
+lluvia, sino por el comportamiento variable del canal radio.
+
+---
+
+---
+
+--- CUESTION 2 ---
+
+--- a) NUMERO NECESARIO DE CANALES DEL SISTEMA ---
+
+Datos:
+
+T_usuario = 5 mE = 5*10^-3 E
+
+Lp = 20 + 35*log10(d)
+
+(C/I)_min = 12 dB
+
+gamma = 3.5
+
+D = 800 usuarios/km^2
+
+Pb = 1.5%
+
+M = 20 dB
+
+No hay sectorizacion:
+
+s = 1
+
+---
+
+--- 1) BALANCE POR COBERTURA ---
+
+--- Enlace descendente BTS -> MS ---
+
+Pt_BTS = 10*log10(20) + 30
+
+Pt_BTS = 43 dBm
+
+PIRE_BTS = Pt_BTS - L_duplexor - L_cable
++ G_amp_TX + G_ant_BTS
+
+PIRE_BTS = 43 - 3 - 42 + 22 + 10
+
+PIRE_BTS = 30 dBm
+
+PIU_MS = S_MS + M + L_conector_MS
+- G_amp_MS - G_ant_MS
+
+PIU_MS = -115 + 20 + 5 - 4 - 0.5
+
+PIU_MS = -94.5 dBm
+
+Lp_max_desc = PIRE_BTS - PIU_MS
+
+Lp_max_desc = 30 - (-94.5)
+
+Lp_max_desc = 124.5 dB
+
+---
+
+--- Enlace ascendente MS -> BTS ---
+
+Pt_MS = 10*log10(8) + 30
+
+Pt_MS = 39 dBm
+
+PIRE_MS = Pt_MS - L_conector_MS + G_amp_MS + G_ant_MS
+
+PIRE_MS = 39 - 5 + 4 + 0.5
+
+PIRE_MS = 38.5 dBm
+
+PIU_BTS = S_BTS + M + L_duplexor + L_cable
+- G_amp_RX - G_ant_BTS
+
+PIU_BTS = -125 + 20 + 3 + 42 - 10 - 10
+
+PIU_BTS = -80 dBm
+
+Lp_max_asc = PIRE_MS - PIU_BTS
+
+Lp_max_asc = 38.5 - (-80)
+
+Lp_max_asc = 118.5 dB
+
+---
+
+El peor enlace es el ascendente:
+
+Lp_max = 118.5 dB
+
+---
+
+--- Radio celular ---
+
+Lp = 20 + 35*log10(d)
+
+118.5 = 20 + 35*log10(d)
+
+log10(d) = (118.5 - 20)/35
+
+d = 10^((118.5 - 20)/35)
+
+d = 652 m
+
+d = 0.652 km
+
+Area_celda = pi*R^2
+
+Area_celda = pi*(0.652)^2
+
+Area_celda = 1.34 km^2
+
+---
+
+--- Usuarios por celula ---
+
+N_usuarios_celda = Area_celda*D
+
+N_usuarios_celda = 1.34*800
+
+N_usuarios_celda = 1072 usuarios
+
+---
+
+--- Trafico por celula ---
+
+A_trafico = N_usuarios_celda*T_usuario
+
+A_trafico = 1072*5*10^-3
+
+A_trafico = 5.36 E
+
+---
+
+Con Erlang-B:
+
+Pb = 1.5%
+
+Para A = 5.36 E se necesitan:
+
+N = 11 canales/celda
+
+porque con 10 canales no llega y con 11 si.
+
+---
+
+--- 2) PATRON CELULAR ---
+
+(C/I)_min = 12 dB
+
+C/I = 10^(12/10)
+
+C/I = 15.85
+
+Formula:
+
+C/I = (s/6)*q^gamma
+
+Como no hay sectorizacion:
+
+s = 1
+
+15.85 < (1/6)*q^3.5
+
+q^3.5 > 15.85*6
+
+q^3.5 > 95.1
+
+q > 3.67
+
+Como:
+
+q = sqrt(3*K)
+
+sqrt(3*K) > 3.67
+
+3*K > 3.67^2
+
+K > 4.5
+
+El siguiente patron celular valido es:
+
+K = 7
+
+---
+
+--- Numero de canales del sistema ---
+
+N_canales_sistema = N_canales_celda*K
+
+N_canales_sistema = 11*7
+
+N_canales_sistema = 77
+
+---
+
+--- Resultado final cuestion 2a ---
+
+N_canales_sistema = 77 canales
+
+---
+
+--- b) TECNICA SIN AUMENTAR CANALES ---
+
+Una tecnica para aumentar la capacidad sin aumentar el
+numero total de canales es la division celular.
+
+Consiste en reducir el radio de las celulas:
+
+R disminuye
+
+Al reducir el radio, tambien disminuye el area:
+
+Area_celda = pi*R^2
+
+Por tanto, en la misma zona caben mas celulas.
+
+Como cada celula reutiliza los canales disponibles,
+aumenta la capacidad por km^2.
+
+No hace falta aumentar el numero total de canales del
+sistema.
+
+Tambien podria usarse sectorizacion si permite reducir
+el patron celular K.
+
+Pero no sirve si simplemente se sectoriza manteniendo
+el mismo K.
+
+---
+
+---
+
+--- CUESTION 3 ---
+
+--- a) POTENCIA NECESARIA ---
+
+Datos:
+
+f = 28 GHz
+
+d = 30 km
+
+A_0.007% = 33 dB
+
+p = 0.008%
+
+S = -110 dBm
+
+No se consideran gases ni moleculas.
+
+---
+
+De la grafica, para la curva:
+
+A_0.007% = 33 dB
+
+y para:
+
+p = 0.008%
+
+se toma aproximadamente:
+
+A_p = 31.5 dB
+
+Por tanto, el margen necesario es:
+
+M = 31.5 dB
+
+---
+
+--- Perdidas de propagacion ---
+
+lambda = c/f
+
+lambda = (3*10^8)/(28*10^9)
+
+lambda = 0.0107 m
+
+Formula de espacio libre:
+
+Lp = 20*log10((4*pi*d)/lambda)
+
+d = 30000 m
+
+Lp = 20*log10((4*pi*30000)/0.0107)
+
+Lp = 150.9 dB
+
+---
+
+--- Balance del radioenlace ---
+
+Del esquema:
+
+G_amp_TX = 10 dB
+
+L_comb = 8 dB
+
+G_ant_TX = 15 dBi
+
+G_ant_RX = 15 dBi
+
+L_duplexor = 5 dB
+
+G_amp_RX = 12 dB
+
+La incognita es:
+
+Pt
+
+---
+
+Formula del margen:
+
+M = Pt + G_amp_TX - L_comb + G_ant_TX
+- Lp + G_ant_RX - L_duplexor
++ G_amp_RX - S
+
+Sustituimos:
+
+31.5 = Pt + 10 - 8 + 15 - 150.9
++ 15 - 5 + 12 - (-110)
+
+Agrupando:
+
+31.5 = Pt - 1.9
+
+Pt = 31.5 + 1.9
+
+Pt = 33.4 dBm
+
+---
+
+--- Paso de dBm a W ---
+
+P(W) = 10^((P_dBm - 30)/10)
+
+P(W) = 10^((33.4 - 30)/10)
+
+P(W) = 2.2 W
+
+---
+
+--- Resultado final cuestion 3a ---
+
+Pt = 33.4 dBm
+
+Pt = 2.2 W aproximadamente
+
+---
+
+--- b) DESVANECIMIENTO SELECTIVO ---
+
+La probabilidad de no fidelidad por desvanecimiento
+selectivo se calcula con:
+
+P_TS = eta*4.32*k*(tau_m/Ts)^2*100%
+
+---
+
+--- Influencia de eta ---
+
+eta representa un factor asociado al enlace y al entorno.
+
+Si eta aumenta, aumenta directamente la probabilidad de
+no fidelidad selectiva.
+
+eta aumenta  ->  P_TS aumenta
+
+---
+
+--- Influencia de k ---
+
+k representa la sensibilidad del sistema o de la
+modulacion frente al desvanecimiento selectivo.
+
+Si k aumenta, el sistema es mas sensible al multitrayecto.
+
+k aumenta  ->  P_TS aumenta
+
+---
+
+--- Influencia de tau_m ---
+
+tau_m es el retardo medio por multitrayecto.
+
+Si tau_m aumenta, las copias de la senal llegan mas
+separadas en el tiempo.
+
+Eso produce mas interferencia entre simbolos.
+
+tau_m aumenta  ->  P_TS aumenta
+
+---
+
+--- Influencia de Ts ---
+
+Ts es el tiempo de simbolo.
+
+Si Ts aumenta, cada simbolo dura mas.
+
+Entonces el mismo retardo multicamino afecta menos.
+
+Ts aumenta  ->  P_TS disminuye
+
+---
+
+--- Resumen cuestion 3b ---
+
+eta aumenta     -> P_TS aumenta
+
+k aumenta       -> P_TS aumenta
+
+tau_m aumenta   -> P_TS aumenta
+
+Ts aumenta      -> P_TS disminuye
+
+---
+
+--- FIN DEL EXAMEN ---
